@@ -3,3 +3,4 @@ cifar-10-batches-py/
 flowers_dataset/
 data/
 celebA/
+*.png
