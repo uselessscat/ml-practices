@@ -1,36 +1,32 @@
 import torch
 from torch.nn import CrossEntropyLoss
+from tqdm.notebook import tqdm
 
 
 def test_model(model, test_dl):
     total_correctas = 0.0
     total_muestras = 0.0
 
-    for x, target in test_dl:          # Iteramos sobre nuestros datos
-        # Inicio de la iteración
-        model.eval()                        # Dejamos el modelo en modo evaluación
-        with torch.no_grad():               # No se calculará información de gradientes
-            # en el código de más abajo.
-            x = x.cuda()
-            target = target.cuda()          # Enviamos nuestros datos a GPU
-            # Hacemos el forward de nuestros datos
-            output = model(x)
+    for x, target in test_dl:
+        model.eval()
 
-            # El máximo valor es nuestra predicción
+        with torch.no_grad():
+            x = x.cuda()
+            target = target.cuda()
+
+            output = model(x)
             preds = output.argmax(dim=1)
-            # Acumulamos las correctas durante la época
+
             correctas = (preds == target).sum()
             total_correctas += correctas
-            # Sumamos el tamaño del batch
+
             total_muestras += target.shape[0]
 
-            accuracy = total_correctas/total_muestras  # Acc = correctas/total
+            accuracy = 100 * (total_correctas / total_muestras)
 
             print(
-                "\rCorrectas: {} Total: {} Accuracy: {:.2f}%"
-                .format(
-                    total_correctas,
-                    total_muestras,
-                    100*accuracy),
-                end=""
+                f'\rCorrectas: {total_correctas} '
+                f'Total: {total_muestras} '
+                f'Accuracy: {accuracy:.2f}%',
+                end=''
             )

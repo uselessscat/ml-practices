@@ -3,7 +3,6 @@ from os.path import join
 from PIL import Image
 import torch
 from torchvision.transforms import Compose, ToTensor, Resize
-
 class Flowers(torch.utils.data.Dataset):
     def __init__(self, root, transform=None):
         self.root = root
