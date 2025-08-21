@@ -3,4 +3,9 @@ cifar-10-batches-py/
 flowers_dataset/
 data/
 celebA/
+Raccoon_dataset/
 *.png
+*.txt
+*.jpg
+*.rar
+*.xml
